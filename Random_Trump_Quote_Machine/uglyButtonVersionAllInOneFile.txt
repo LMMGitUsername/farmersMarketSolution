@@ -1,0 +1,92 @@
+This version of random trump quote machine on https://codepen.io/LMMGitUsername/pen/BREbem works but
+is ugly and, I have reason to believe, done very wrongly. :P I need to be using some button
+library or something maybe...mayyyybe...
+
+uh, at the very least I want to make the stupid button pretty and stop changing with the quotes.
+--------------------------------------
+saving all of this "working" code before I start a rewrite or whatever is goign to happen to make this better... 6/28/2017
+---------------------------------------
+HTML
+<html lang="en">
+<head>
+  <title>LMM Random Trump Quote Machine</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  
+<div class="container">
+  <h2>Random Trump Quote Machine</h2>
+  <div class="well" id="quote">
+  </div>
+    <a id="generateNewQuote" class="btn btn-primary btn-sm" onclick="loadDoc()">Generate New Quote</a>
+    <div id="tweet" class="btn btn-primary btn-sm" target="_blank">Tweet</div>
+</div>
+  
+<footer class="container-fluid text-center">
+  <a href="https://www.facebook.com/LilDebiRoflcopter" class="fa fa-facebook" target="_blank"></a>
+  <a href="https://twitter.com/marmarmctaz?lang=en" class="fa fa-twitter" target="_blank"></a>
+  <a href="https://plus.google.com/u/0/103860771944066174152" class="fa fa-google" target="_blank"></a>
+  <a href="https://www.linkedin.com/in/lisa-martinez-24a49029/" class="fa fa-linkedin" target="_blank"></a>
+  <a href="https://www.youtube.com/user/marmarmctaz" class="fa fa-youtube" target="_blank"></a>
+  <a href="https://www.snapchat.com/add/marmarmctaz" class="fa fa-snapchat-ghost" target="_blank"></a>
+  <span style="z-index:50;font-size:0.9em;"><img src="https://png.pngtree.com/element_origin_min_pic/16/11/15/89a1f35d71139a37bb3fe572a954f2f8.jpg" height="40" width="40" alt="https://whatdoestrumpthink.com/"/><a href="https://whatdoestrumpthink.com/" title="Powered by quotes from whatdoestrumpthink.com" style="margin-left: 4px; vertical-align: middle;">whatdoestrumpthink.com</a></span>
+  <p>© 2017 LMM</p>
+</footer>
+
+</body>
+</html>
+------------
+CSS
+------------
+#tweet {
+  
+}
+  /*var x = document.getElementById("demo");   // Get the element with id="demo"
+x.style.color = "red";  // Change the color of the element 
+
+<body>
+<div id="DIV1">
+ // Some content goes here.
+</div>
+
+<div id="DIV2">
+</div>
+<script type="text/javascript">
+
+   var MyDiv1 = document.getElementById('DIV1');
+   var MyDiv2 = document.getElementById('DIV2');
+   MyDiv2.innerHTML = MyDiv1.innerHTML;
+
+</script>
+</body>*/
+-------------------------------------
+JAVASCRIPT
+----------------------
+$(document).ready(function() {
+  //generate a quote as soon as the page loads
+  $.get("https://api.whatdoestrumpthink.com/api/v1/quotes/random", function(data, status){
+  $(".well").html(data.message);
+    
+  var mydiv = document.getElementById("tweet");
+  var aTag = document.createElement('a');
+  aTag.className = "tweetText";
+  var tweetHref = "https://twitter.com/intent/tweet?text=" + data.message;
+  aTag.setAttribute('href',tweetHref);
+  aTag.innerHTML = tweetHref;
+  mydiv.appendChild(aTag);  
+});
+  //generate a quote when the user clicks the Generate... button
+  $("#generateNewQuote").on("click", function(){
+    $.get("https://api.whatdoestrumpthink.com/api/v1/quotes/random", function(data, status){
+    $(".well").html(data.message);
+    var tweetHref = "https://twitter.com/intent/tweet?text=" + data.message;  
+    $(".tweetText").attr('href',tweetHref);
+});
+});
+  
+
+  
+});
